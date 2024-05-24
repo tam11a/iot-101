@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 
 export default function Nav() {
 	const pathname = usePathname();
-	console.log(pathname?.split("/")[1]);
 	return (
 		<Tabs
 			value={pathname?.split("/")[1] ?? "dashboard"}

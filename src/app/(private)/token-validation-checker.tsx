@@ -5,7 +5,7 @@ import useUser from "@/hooks/useUser";
 import { authService } from "@/lib/auth.service";
 import { useRouter } from "next/navigation";
 
-export const Loading = () => {
+export const LoadingAnimation = () => {
 	return (
 		<div className="h-svh w-svw max-w-xs mx-auto flex flex-col items-center justify-center space-y-3">
 			{/* <Skeleton className="h-[125px] w-[250px] rounded-xl" />
@@ -46,7 +46,7 @@ const TokenValidationChecker = ({
 	const router = useRouter();
 
 	if (isLoading) {
-		return <Loading />;
+		return <LoadingAnimation />;
 	}
 
 	if (isError) {
@@ -58,7 +58,7 @@ const TokenValidationChecker = ({
 		}
 		return (
 			<>
-				<Loading />
+				<LoadingAnimation />
 			</>
 		);
 	}
