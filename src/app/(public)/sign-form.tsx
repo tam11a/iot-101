@@ -78,8 +78,6 @@ export function SignForm() {
 		if (res.status) {
 			// Setting cookies
 
-			console.log(res.data);
-
 			authService.setToken(res.data.token);
 
 			// Generating Toast
