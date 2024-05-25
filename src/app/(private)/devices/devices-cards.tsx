@@ -8,6 +8,9 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import AddDevice from "./add-device";
+import { Badge } from "@/components/ui/badge";
+import moment from "moment";
+import Link from "next/link";
 
 export default function DevicesCards() {
 	const { data, isLoading } = useGetAllDevices();
@@ -31,7 +34,21 @@ export default function DevicesCards() {
 			{data?.data?.map((device: any) => (
 				<Card key={device.id}>
 					<CardHeader className="inline-block">
-						{device.label} <span className="inline">#{device.id}</span>
+						<Link
+							className="font-semibold underline"
+							href={`/devices/${device.id}`}
+						>
+							{device.label}
+						</Link>{" "}
+						<span className="inline">#{device.id}</span>{" "}
+						{moment(new Date()).diff(moment(device.created_at), "days") < 2 ? (
+							<Badge
+								className="ml-2"
+								variant={"outline"}
+							>
+								New
+							</Badge>
+						) : null}
 					</CardHeader>
 					<CardContent>
 						<CardDescription>{device.description}</CardDescription>
