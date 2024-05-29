@@ -7,84 +7,57 @@ import {
 	YAxis,
 	Tooltip,
 } from "recharts";
-
-const data = [
-	{
-		name: "Jan",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Feb",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Mar",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Apr",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "May",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Jun",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Jul",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Aug",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Sep",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Oct",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Nov",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-	{
-		name: "Dec",
-		total: Math.floor(Math.random() * 5000) + 1000,
-	},
-];
+import { useGetTempChart } from "@/lib/actions/chart/temperature";
+import moment from "moment";
 
 export default function TemperatureChart({ sensor }: { sensor: any }) {
-	console.log(sensor);
+	const { data, isLoading } = useGetTempChart({
+		sensor_id: sensor.sensor_id,
+		date_lte: moment().endOf("day").toISOString(),
+		date_gte: moment().startOf("day").toISOString(),
+	});
+	return (
+		<>
+			<ChartRealtime
+				sensor={sensor}
+				data={data?.data || []}
+			/>
+		</>
+	);
+}
+
+const ChartRealtime = ({ sensor, data }: { sensor: any; data: any[] }) => {
+	// Add Sensor Realtime Logic Here
 	return (
 		<>
 			<ResponsiveContainer
 				width="100%"
 				height={200}
 			>
-				<LineChart data={data}>
+				<LineChart
+					data={Array.from(data || [], (d: any) => ({
+						...d,
+						create_time: moment(d.created_at).format("hh:mm:ss a"),
+					}))}
+				>
 					<XAxis
-						dataKey="name"
+						dataKey="create_time"
 						stroke="#888888"
 						fontSize={12}
 						tickLine={false}
 						axisLine={false}
+						alignmentBaseline="ideographic"
 					/>
 					<YAxis
 						stroke="#888888"
 						fontSize={12}
 						tickLine={false}
 						axisLine={false}
-						tickFormatter={(value) => `$${value}`}
+						tickFormatter={(temperature) => `${temperature}°C`}
 					/>
 					<Line
 						type={"monotone"}
-						dataKey="total"
+						dataKey="temperature"
 						stroke="currentColor"
 						fill="currentColor"
 						className="fill-primary"
@@ -94,4 +67,4 @@ export default function TemperatureChart({ sensor }: { sensor: any }) {
 			</ResponsiveContainer>
 		</>
 	);
-}
+};

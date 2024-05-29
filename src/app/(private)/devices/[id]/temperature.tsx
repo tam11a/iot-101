@@ -69,13 +69,16 @@ export default function Temperature({ device }: { device: any }) {
 						>
 							<div className="flex flex-col items-start p-2 md:min-w-fit">
 								<h3 className="text-3xl font-semibold">
-									{sensor.temperature}°C
+									{sensor.temperature || "--.--"}°C
 								</h3>
 								<p className="text-lg font-semibold">
-									Humidity: {sensor.humidity}%
+									Humidity: {sensor.humidity || "--"}%
 								</p>
 								<p className="text-muted-foreground">
-									Last Updated: {moment(sensor.created_at).calendar()}
+									Last Updated:{" "}
+									{!!sensor.created_at
+										? moment(sensor.created_at).calendar()
+										: "N/A"}
 								</p>
 							</div>
 							<TemperatureChart
