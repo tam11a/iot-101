@@ -65,12 +65,14 @@ export default function AddDevice() {
 			>
 				<DialogTrigger asChild>
 					<Card className="flex flex-row items-center justify-start hover:bg-muted cursor-pointer">
-						<PlusIcon className="w-6 h-6 ml-6" />
-						<div className="flex-1">
-							<CardHeader className="pb-2">Add New</CardHeader>
-							<CardContent>
-								<CardDescription>Click to add a new device.</CardDescription>
-							</CardContent>
+						<div className="flex flex-row mx-auto items-center">
+							<PlusIcon className="w-8 h-8 mx-auto" />
+							<div className="flex-1">
+								<CardHeader className="pb-1 font-bold">Add New</CardHeader>
+								<CardContent>
+									<CardDescription>Click to add a new device.</CardDescription>
+								</CardContent>
+							</div>
 						</div>
 					</Card>
 				</DialogTrigger>

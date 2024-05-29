@@ -16,7 +16,6 @@ function useMqtt({
 	onConnectedHandler = (client) => {},
 }: useMqttProps) {
 	const clientRef = useRef<MqttClient | null>(null);
-	console.log(clientRef.current);
 
 	useEffect(() => {
 		if (clientRef.current) return;
@@ -49,14 +48,20 @@ function useMqtt({
 			if (onConnectedHandler) onConnectedHandler(client);
 		});
 
-		return () => {
-			if (client) {
-				topicHandlers.forEach((th) => {
-					client.unsubscribe(th.topic);
-				});
-				client.end();
-			}
-		};
+		client?.on("disconnect", () => {
+			console.warn("Disconnected from MQTT Broker. Reconnecting...");
+			client.reconnect();
+		});
+
+		// return () => {
+		// 	if (client) {
+		// 		topicHandlers.forEach((th) => {
+		// 			client.unsubscribe(th.topic);
+		// 			console.log("Unsubscribed from: ", th.topic);
+		// 		});
+		// 		client.end();
+		// 	}
+		// };
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 }
