@@ -12,7 +12,7 @@ import {
 import config from "@/lib/config";
 import { useRef, useState } from "react";
 import { MqttClient } from "mqtt";
-import { LucideFileWarning } from "lucide-react";
+import { DatabaseIcon, LucideFileWarning } from "lucide-react";
 
 export default function DeviceCard({ device }: { device: any }) {
 	const [sensors, setSensors] = useState<{
@@ -70,27 +70,36 @@ export default function DeviceCard({ device }: { device: any }) {
 				<CardHeader className="inline-block flex-1">
 					{Object.values(sensors)?.length === 0 ? (
 						<span className="text-xl text-muted-foreground flex flex-row flex-wrap gap-2">
-							<LucideFileWarning size={24} /> No data available
+							<LucideFileWarning size={24} /> No Sensor
 						</span>
 					) : null}
-					{Object.values(sensors).map((sensor, index) => (
-						<div
-							key={index}
-							className="inline-block"
-						>
-							<div className="inline-block">
-								<span className="text-3xl">{sensor.temperature}</span>{" "}
-								<span>°C</span>
+					{Object.values(sensors).map((sensor, index) =>
+						sensor.created_at ? (
+							<div
+								key={index}
+								className="inline-block"
+							>
+								<div className="inline-block">
+									<span className="text-3xl">{sensor.temperature}</span>{" "}
+									<span>°C</span>
+								</div>
+								<div className="inline-block ml-2 text-sm">
+									(<span>{sensor.humidity}%</span>{" "}
+									<span className="font-semibold">Humidity</span>)
+								</div>
+								<p className="text-xs mt-1 text-muted-foreground">
+									Last Updated {moment(sensor.created_at).calendar()}
+								</p>
 							</div>
-							<div className="inline-block ml-2 text-sm">
-								(<span>{sensor.humidity}%</span>{" "}
-								<span className="font-semibold">Humidity</span>)
-							</div>
-							<p className="text-xs mt-1 text-muted-foreground">
-								Last Updated {moment(sensor.created_at).calendar()}
-							</p>
-						</div>
-					))}
+						) : (
+							<span
+								className="text-xl text-muted-foreground flex flex-row flex-wrap gap-2"
+								key={index}
+							>
+								<DatabaseIcon size={24} /> No data available
+							</span>
+						)
+					)}
 				</CardHeader>
 				<br />
 				<CardHeader className="inline-block py-0 my-0">
