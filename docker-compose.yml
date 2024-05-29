@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iot-101-frontend
+    restart: always
+    env_file:
+      - .env.local
+    ports:
+      - "3011:3000"
