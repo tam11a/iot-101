@@ -62,7 +62,12 @@ const ChartRealtime = ({ sensor, data }: { sensor: any; data: any[] }) => {
 						fill="currentColor"
 						className="fill-primary"
 					/>
-					<Tooltip />
+					<Tooltip
+						contentStyle={{
+							color: "#000",
+							borderRadius: "var(--radius)",
+						}}
+					/>
 				</LineChart>
 			</ResponsiveContainer>
 		</>
