@@ -6,6 +6,9 @@ import moment from "moment";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Temperature from "./temperature";
+import { Calendar } from "@/components/ui/calendar";
+import { Card } from "@/components/ui/card";
+import { useQueryState, parseAsIsoDateTime } from "nuqs";
 
 export default function DevicePage({
 	params,
@@ -13,9 +16,25 @@ export default function DevicePage({
 	params: { id: number | string };
 }) {
 	const { data, isLoading } = useGetDevice({ id: params.id });
+	const [startDate, setStartDate] = useQueryState(
+		"startDate",
+		parseAsIsoDateTime
+			.withDefault(moment().startOf("day").toDate())
+			.withOptions({
+				clearOnDefault: true,
+				history: "replace",
+			})
+	);
+	const [endDate, setEndDate] = useQueryState(
+		"endDate",
+		parseAsIsoDateTime.withDefault(moment().endOf("day").toDate()).withOptions({
+			clearOnDefault: true,
+			history: "replace",
+		})
+	);
 	if (isLoading) return <LoadingAnimation />;
 	if (!data?.data) return <NotFound />;
-	console.log(data);
+	console.log(startDate, endDate);
 
 	return (
 		<main className="max-w-7xl mx-auto p-4 py-8">
@@ -45,6 +64,22 @@ export default function DevicePage({
 				)}
 			</div>
 			<Separator className="my-2" />
+			<div className="flex flex-col md:flex-row justify-between gap-3">
+				<Card className="p-4 flex-1 w-full"></Card>
+				<Card>
+					<Calendar
+						mode="range"
+						selected={{
+							from: startDate,
+							to: endDate,
+						}}
+						onSelect={(range: any) => {
+							setStartDate(moment(range?.from).startOf("day").toDate());
+							setEndDate(moment(range?.to).endOf("day").toDate());
+						}}
+					/>
+				</Card>
+			</div>
 			{!!data?.data?.sensors?.length && <Temperature device={data?.data} />}
 		</main>
 	);

@@ -28,7 +28,13 @@ import { useState } from "react";
 
 export default function AddDevice() {
 	const [open, setOpen] = useState(false);
-	const form = useForm();
+	const form = useForm({
+		defaultValues: {
+			label: "",
+			description: "",
+			switches: 6,
+		},
+	});
 
 	const { mutateAsync: createDevice, isPending } = useCreateDevice();
 
@@ -123,6 +129,26 @@ export default function AddDevice() {
 											</FormControl>
 											<FormDescription>
 												Enter a description for your device.
+											</FormDescription>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="switches"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Switches *</FormLabel>
+											<FormControl>
+												<Input
+													placeholder="Total Switches"
+													type="number"
+													{...field}
+												/>
+											</FormControl>
+											<FormDescription>
+												Enter the total number of switches in the device.
 											</FormDescription>
 											<FormMessage />
 										</FormItem>

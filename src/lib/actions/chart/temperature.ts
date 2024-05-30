@@ -3,7 +3,7 @@ import instance from "..";
 
 export const useGetTempChart = (params: any) => {
 	return useQuery({
-		queryKey: ["temp-chart"],
+		queryKey: ["temp-chart", params],
 		queryFn: () => {
 			return instance.get("/chart/temperature", {
 				params,
