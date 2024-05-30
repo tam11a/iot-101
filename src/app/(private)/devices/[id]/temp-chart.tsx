@@ -30,7 +30,6 @@ export default function TemperatureChart({ sensor }: { sensor: any }) {
 			history: "replace",
 		})
 	);
-	console.log(startDate, endDate);
 	const { data, isLoading } = useGetTempChart({
 		sensor_id: sensor.sensor_id,
 		date_lte: moment(endDate).endOf("day").toISOString(),

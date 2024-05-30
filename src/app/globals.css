@@ -58,4 +58,7 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+	code {
+		@apply bg-accent-foreground text-muted py-[1px] px-1 rounded;
+	}
 }

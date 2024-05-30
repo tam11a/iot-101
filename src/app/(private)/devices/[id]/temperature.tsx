@@ -6,6 +6,7 @@ import moment from "moment";
 import { MqttClient } from "mqtt";
 import { useRef, useState } from "react";
 import TemperatureChart from "./temp-chart";
+import SensorConnect from "./sensor-connect";
 
 export default function Temperature({ device }: { device: any }) {
 	const [sensors, setSensors] = useState<{
@@ -80,6 +81,10 @@ export default function Temperature({ device }: { device: any }) {
 										? moment(sensor.created_at).calendar()
 										: "N/A"}
 								</p>
+								<SensorConnect
+									sensor={sensor}
+									sensor_id={sensor_id}
+								/>
 							</div>
 							<TemperatureChart
 								sensor={{

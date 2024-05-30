@@ -6,6 +6,7 @@ const config = {
 	// mapApiKey: process.env.NEXT_MAP_KEY,
 	nodeEnv: process.env.NEXT_NODE_ENV,
 	mqttBroker: process.env.NEXT_PUBLIC_MQTT_BROKER as string,
+	mqttBase: process.env.NEXT_PUBLIC_MQTT_BROKER_URL as string,
 };
 
 export default config;

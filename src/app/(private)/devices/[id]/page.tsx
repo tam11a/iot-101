@@ -34,7 +34,6 @@ export default function DevicePage({
 	);
 	if (isLoading) return <LoadingAnimation />;
 	if (!data?.data) return <NotFound />;
-	console.log(startDate, endDate);
 
 	return (
 		<main className="max-w-7xl mx-auto p-4 py-8">
