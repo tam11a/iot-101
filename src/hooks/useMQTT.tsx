@@ -46,6 +46,7 @@ function useMqtt({
 
 		client?.on("connect", () => {
 			if (onConnectedHandler) onConnectedHandler(client);
+			console.log("WS Connected.");
 		});
 
 		client?.on("disconnect", () => {

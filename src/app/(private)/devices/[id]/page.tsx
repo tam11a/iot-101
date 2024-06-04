@@ -9,6 +9,7 @@ import Temperature from "./temperature";
 import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 import { useQueryState, parseAsIsoDateTime } from "nuqs";
+import SwitchConnect from "./switch-connect";
 
 export default function DevicePage({
 	params,
@@ -63,21 +64,33 @@ export default function DevicePage({
 				)}
 			</div>
 			<Separator className="my-2" />
+			{data?.data?.switches?.length > 0 && (
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-3 gap-3">
+					{data?.data?.switches?.map((sw: any) => {
+						return (
+							<SwitchConnect
+								key={sw.id}
+								switchData={sw}
+								remote_action={data?.data?.remote_action}
+							/>
+						);
+					})}
+				</div>
+			)}
 			<div className="flex flex-col md:flex-row justify-between gap-3">
 				<Card className="p-4 flex-1 w-full"></Card>
-				<Card>
-					<Calendar
-						mode="range"
-						selected={{
-							from: startDate,
-							to: endDate,
-						}}
-						onSelect={(range: any) => {
-							setStartDate(moment(range?.from).startOf("day").toDate());
-							setEndDate(moment(range?.to).endOf("day").toDate());
-						}}
-					/>
-				</Card>
+				<Calendar
+					className="border rounded-lg"
+					mode="range"
+					selected={{
+						from: startDate,
+						to: endDate,
+					}}
+					onSelect={(range: any) => {
+						setStartDate(moment(range?.from).startOf("day").toDate());
+						setEndDate(moment(range?.to).endOf("day").toDate());
+					}}
+				/>
 			</div>
 			{!!data?.data?.sensors?.length && <Temperature device={data?.data} />}
 		</main>

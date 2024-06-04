@@ -59,8 +59,8 @@ export default function Temperature({ device }: { device: any }) {
 		onConnectedHandler: (client) => setMqttClient(client),
 	});
 	return (
-		<div className="p-3">
-			<div className="flex flex-row items-center flex-wrap gap-2 p-2">
+		<div className="my-3">
+			<div className="flex flex-row items-center flex-wrap gap-2">
 				{Object.keys(sensors).map((sensor_id: any) => {
 					const sensor = sensors[sensor_id];
 					return (
@@ -68,7 +68,7 @@ export default function Temperature({ device }: { device: any }) {
 							key={sensor_id}
 							className="flex flex-col md:flex-row gap-3 md:items-center w-full"
 						>
-							<div className="flex flex-col items-start p-2 md:min-w-fit">
+							<div className="flex flex-col items-start p-2 md:min-w-fit px-5 md:ml-9">
 								<h3 className="text-3xl font-semibold">
 									{sensor.temperature || "--.--"}°C
 								</h3>
