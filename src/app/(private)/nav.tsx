@@ -8,9 +8,9 @@ export default function Nav() {
 	return (
 		<Tabs
 			value={pathname?.split("/")[1] ?? "dashboard"}
-			className="max-w-2xl mx-auto px-6 mt-4 bg-background rounded-xl shadow-sm fixed bottom-6 left-0 right-0 z-10"
+			className="max-w-2xl mx-auto mt-4 bg-background rounded-xl shadow-sm fixed bottom-6 left-0 right-0 z-10"
 		>
-			<TabsList className="grid w-full grid-cols-3">
+			<TabsList className="grid w-full grid-cols-3 border">
 				<TabsTrigger value="dashboard">
 					<Link href="/dashboard">Dashboard</Link>
 				</TabsTrigger>
