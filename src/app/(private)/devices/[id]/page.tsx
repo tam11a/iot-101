@@ -65,7 +65,7 @@ export default function DevicePage({
 			</div>
 			<Separator className="my-2" />
 			{data?.data?.switches?.length > 0 && (
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-3 gap-3">
+				<div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 my-3 gap-3">
 					{data?.data?.switches?.map((sw: any) => {
 						return (
 							<SwitchConnect

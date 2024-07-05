@@ -69,7 +69,10 @@ export default function Temperature({ device }: { device: any }) {
 							className="flex flex-col md:flex-row gap-3 md:items-center w-full"
 						>
 							<div className="flex flex-col items-start p-2 md:min-w-fit px-5 md:ml-9">
-								<h3 className="text-3xl font-semibold">
+								<p className="text-sm font-semibold mb-2 underline">
+									Sensor #{sensor_id}
+								</p>
+								<h3 className="text-4xl font-semibold">
 									{sensor.temperature || "--.--"}°C
 								</h3>
 								<p className="text-lg font-semibold">
@@ -81,10 +84,10 @@ export default function Temperature({ device }: { device: any }) {
 										? moment(sensor.created_at).calendar()
 										: "N/A"}
 								</p>
-								<SensorConnect
+								{/* <SensorConnect
 									sensor={sensor}
 									sensor_id={sensor_id}
-								/>
+								/> */}
 							</div>
 							<TemperatureChart
 								sensor={{
