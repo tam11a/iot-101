@@ -88,9 +88,7 @@ export default function SwitchConnect({
 	return (
 		<div className="relative">
 			<Card className="p-3 rounded-b-none">
-				<p className="text-sm text-center font-bold">
-					Switch #{switchData?.id}
-				</p>
+				<p className="text-sm text-center font-bold">Motor #{switchData?.id}</p>
 			</Card>
 			<Card
 				className={cn(
