@@ -9,6 +9,7 @@ import React from "react";
 import { useLottie } from "lottie-react";
 import pump from "./pump.json";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function SwitchConnect({
 	switchData,
@@ -91,7 +92,12 @@ export default function SwitchConnect({
 					Switch #{switchData?.id}
 				</p>
 			</Card>
-			<Card className="rounded-none border-t-0 p-3 flex flex-row relative  min-h-[100px]">
+			<Card
+				className={cn(
+					"rounded-none border-t-0 p-3 flex flex-row relative  min-h-[100px]",
+					status ? "bg-lime-50" : "bg-red-50"
+				)}
+			>
 				<div className="flex-1 w-full">
 					<div className="my-2">
 						{/* <Switch
