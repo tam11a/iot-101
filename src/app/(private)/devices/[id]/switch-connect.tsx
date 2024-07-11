@@ -76,7 +76,7 @@ export default function SwitchConnect({
 	);
 
 	React.useEffect(() => {
-		if (status && !remote) {
+		if (status) {
 			play();
 			setDirection(1);
 		} else {
