@@ -10,6 +10,7 @@ import { useLottie } from "lottie-react";
 import pump from "./pump.json";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export default function SwitchConnect({
 	switchData,
@@ -63,7 +64,7 @@ export default function SwitchConnect({
 		onConnectedHandler: (client) => setMqttClient(client),
 	});
 
-	const { View, play, setDirection, goToAndPlay } = useLottie(
+	const { View, play, setDirection } = useLottie(
 		{
 			animationData: pump,
 			loop: false,
@@ -115,51 +116,52 @@ export default function SwitchConnect({
 				</div>
 				<div className="absolute bottom-0 right-0">{View}</div>
 			</Card>
-			<Card
-				className={cn(
-					remote ? "rounded-none border-y-0" : "rounded-t-none",
-					"p-3"
-				)}
-			>
+			<Card className={cn("rounded-none border-y-0", "p-3")}>
 				<p className="text-xs text-muted-foreground">
 					Updated: {moment(lastUpdated).calendar()}
 				</p>
 			</Card>
 			<Card
 				className={cn(
-					remote ? "rounded-t-none p-3 flex flex-row gap-2" : "hidden"
+					"rounded-t-none p-3 flex flex-row items-center justify-center gap-2"
 				)}
 			>
-				<Button
-					className="flex-1 bg-lime-600 hover:bg-lime-700 disabled:bg-lime-300"
-					disabled={status || !remote}
-					onClick={async () => {
-						if (mqttClientRef.current) {
-							mqttClientRef.current.publish(
-								`switch/${switchData?.id}/action`,
-								JSON.stringify({ action: true })
-							);
-						}
-						// setRemoteStatus(true);
-					}}
-				>
-					Start
-				</Button>
-				<Button
-					className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-red-200"
-					disabled={!status || !remote}
-					onClick={async () => {
-						if (mqttClientRef.current) {
-							mqttClientRef.current.publish(
-								`switch/${switchData?.id}/action`,
-								JSON.stringify({ action: false })
-							);
-						}
-						// setRemoteStatus(false);
-					}}
-				>
-					Stop
-				</Button>
+				{remote ? (
+					<>
+						<Button
+							className="flex-1 bg-lime-600 hover:bg-lime-700 disabled:bg-lime-300"
+							disabled={status || !remote}
+							onClick={async () => {
+								if (mqttClientRef.current) {
+									mqttClientRef.current.publish(
+										`switch/${switchData?.id}/action`,
+										JSON.stringify({ action: true })
+									);
+								}
+								// setRemoteStatus(true);
+							}}
+						>
+							Start
+						</Button>
+						<Button
+							className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-red-200"
+							disabled={!status || !remote}
+							onClick={async () => {
+								if (mqttClientRef.current) {
+									mqttClientRef.current.publish(
+										`switch/${switchData?.id}/action`,
+										JSON.stringify({ action: false })
+									);
+								}
+								// setRemoteStatus(false);
+							}}
+						>
+							Stop
+						</Button>
+					</>
+				) : (
+					<Badge className="bg-red-500">Control Disabled</Badge>
+				)}
 			</Card>
 		</div>
 	);
