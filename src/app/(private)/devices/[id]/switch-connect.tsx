@@ -75,7 +75,7 @@ export default function SwitchConnect({
 	);
 
 	React.useEffect(() => {
-		if (status) {
+		if (status && !remote) {
 			play();
 			setDirection(1);
 		} else {
@@ -83,7 +83,7 @@ export default function SwitchConnect({
 			play();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [status]);
+	}, [status, remote]);
 
 	return (
 		<div className="relative">
@@ -115,12 +115,21 @@ export default function SwitchConnect({
 				</div>
 				<div className="absolute bottom-0 right-0">{View}</div>
 			</Card>
-			<Card className="rounded-none border-y-0 p-3">
+			<Card
+				className={cn(
+					remote ? "rounded-none border-y-0" : "rounded-t-none",
+					"p-3"
+				)}
+			>
 				<p className="text-xs text-muted-foreground">
 					Updated: {moment(lastUpdated).calendar()}
 				</p>
 			</Card>
-			<Card className="rounded-t-none p-3 flex flex-row gap-2">
+			<Card
+				className={cn(
+					remote ? "rounded-t-none p-3 flex flex-row gap-2" : "hidden"
+				)}
+			>
 				<Button
 					className="flex-1 bg-lime-600 hover:bg-lime-700 disabled:bg-lime-300"
 					disabled={status || !remote}

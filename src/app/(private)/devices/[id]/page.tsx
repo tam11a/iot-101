@@ -47,6 +47,14 @@ export default function DevicePage({
 					2 ? (
 						<Badge className="ml-2">New</Badge>
 					) : null}
+					{!data?.data?.remote_action ? (
+						<Badge
+							className="ml-2"
+							variant={"destructive"}
+						>
+							Offline Mode
+						</Badge>
+					) : null}
 				</p>
 				<h1 className="text-2xl font-bold">Name: {data?.data?.label}</h1>
 				<p className="text-muted-foreground font-semibold">
