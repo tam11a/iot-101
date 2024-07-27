@@ -12,6 +12,7 @@ export default function ActiveStatus({
 }: {
 	device_id: number | string;
 }) {
+	const [isOnline, setIsOnline] = React.useState(false);
 	const [pingTime, setPingTime] = React.useState<Date | null>(null);
 
 	const incomingMessageHandlers = React.useRef([
@@ -42,11 +43,30 @@ export default function ActiveStatus({
 		onConnectedHandler: (client) => setMqttClient(client),
 	});
 
+	React.useEffect(() => {
+		const intervalId = setInterval(() => {
+			if (pingTime === null) {
+				return;
+			}
+			const now = moment();
+			const difference = moment(pingTime).diff(now, "seconds");
+
+			if (difference < 10) {
+				setIsOnline(true);
+			} else {
+				setIsOnline(false);
+			}
+		}, 1000);
+
+		return () => clearInterval(intervalId); // cleanup the interval on component unmount
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return pingTime === null ? (
 		<></>
 	) : (
 		<>
-			{moment().diff(moment(pingTime)) < 10 ? (
+			{isOnline ? (
 				<Badge
 					variant="default"
 					className="bg-lime-400"
