@@ -15,9 +15,11 @@ import { Badge } from "@/components/ui/badge";
 export default function SwitchConnect({
 	switchData,
 	remote_action = false,
+	setManualControl,
 }: {
 	switchData: any;
 	remote_action: boolean;
+	setManualControl?: (state: boolean) => void;
 }) {
 	const [remote, setRemoteActionState] = React.useState<boolean>(remote_action);
 	const [status, setRemoteStatus] = React.useState<boolean>(
@@ -42,6 +44,9 @@ export default function SwitchConnect({
 			handler: ({ packet, payload }: { packet: any; payload: any }) => {
 				if (!packet?.retain && payload?.toggle !== null) {
 					setRemoteActionState(payload?.toggle);
+					if (setManualControl) {
+						setManualControl(payload?.toggle);
+					}
 				}
 			},
 		},

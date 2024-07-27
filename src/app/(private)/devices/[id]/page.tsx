@@ -4,7 +4,6 @@ import { LoadingAnimation } from "../../token-validation-checker";
 import NotFound from "@/app/not-found";
 import moment from "moment";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import Temperature from "./temperature";
 import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
@@ -17,6 +16,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { useEffect, useState } from "react";
 
 export default function DevicePage({
 	params,
@@ -40,6 +40,17 @@ export default function DevicePage({
 			history: "replace",
 		})
 	);
+
+	const [manualControl, setManualControl] = useState<boolean>(
+		data?.data?.remote_action
+	);
+
+	useEffect(() => {
+		if (!data) return;
+
+		setManualControl(data?.data?.remote_action);
+	}, [data]);
+
 	if (isLoading) return <LoadingAnimation />;
 	if (!data?.data) return <NotFound />;
 
@@ -55,7 +66,7 @@ export default function DevicePage({
 						2 ? (
 							<Badge className="ml-2">New</Badge>
 						) : null}
-						{!data?.data?.remote_action ? (
+						{!manualControl ? (
 							<Badge
 								className="ml-2"
 								variant={"destructive"}
@@ -94,6 +105,7 @@ export default function DevicePage({
 								key={sw.id}
 								switchData={sw}
 								remote_action={data?.data?.remote_action}
+								setManualControl={setManualControl}
 							/>
 						);
 					})}
