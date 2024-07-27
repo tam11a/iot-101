@@ -45,7 +45,7 @@ export default function DevicePage({
 
 	return (
 		<main className="max-w-7xl mx-auto p-4 py-8">
-			<Card className="p-10 w-full flex flex-row items-start justify-between">
+			<Card className="p-10 w-full flex flex-col sm:flex-row items-start justify-between">
 				<div>
 					<p className="text-muted-foreground flex flex-row items-center gap-1">
 						<span className="underline font-semibold ">

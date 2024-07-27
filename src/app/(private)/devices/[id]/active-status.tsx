@@ -12,7 +12,7 @@ export default function ActiveStatus({
 }: {
 	device_id: number | string;
 }) {
-	const [isOnline, setIsOnline] = React.useState(false);
+	const [isOnline, setIsOnline] = React.useState<Boolean | null>(null);
 	const [pingTime, setPingTime] = React.useState<Date | null>(null);
 
 	const incomingMessageHandlers = React.useRef([
@@ -45,11 +45,8 @@ export default function ActiveStatus({
 
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
-			if (pingTime === null) {
-				return;
-			}
 			const now = moment();
-			const difference = moment(pingTime).diff(now, "seconds");
+			const difference = now.diff(moment(pingTime), "seconds");
 
 			if (difference < 10) {
 				setIsOnline(true);
@@ -60,16 +57,16 @@ export default function ActiveStatus({
 
 		return () => clearInterval(intervalId); // cleanup the interval on component unmount
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [pingTime]);
 
-	return pingTime === null ? (
+	return pingTime === null || isOnline === null ? (
 		<></>
 	) : (
 		<>
 			{isOnline ? (
 				<Badge
 					variant="default"
-					className="bg-lime-400"
+					className="bg-lime-400 hover:bg-lime-500 hover:cursor-pointer"
 				>
 					Online
 				</Badge>
